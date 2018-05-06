@@ -19,6 +19,7 @@ class DefaultPlatform(registry_forms.FormDefaults):
         elif not general_config.platform:
             state.update_item(general_config, platform='openwrt')
 
+
 registration.point('node.config').add_form_defaults(DefaultPlatform())
 
 
@@ -34,6 +35,7 @@ class DefaultType(registry_forms.FormDefaults):
             state.append_item(type_models.TypeConfig, type='koruza')
         elif not type_config.type:
             state.update_item(type_config, type='koruza')
+
 
 registration.point('node.config').add_form_defaults(DefaultType())
 
@@ -61,6 +63,7 @@ class DefaultProject(registry_forms.FormDefaults):
             except project_models.Project.DoesNotExist:
                 state.update_item(project_config, project=koruza_project)
 
+
 registration.point('node.config').add_form_defaults(DefaultProject())
 
 
@@ -72,4 +75,6 @@ class DefaultTelemetrySource(registry_forms.FormDefaults):
         else:
             state.update_item(telemetry_config, source='push')
 
+
 registration.point('node.config').add_form_defaults(DefaultTelemetrySource())
+

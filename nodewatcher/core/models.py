@@ -40,6 +40,7 @@ class Node(models.Model):
         from django.core.urlresolvers import reverse
         return reverse('DisplayComponent:node', kwargs={'pk': self.pk})
 
+
 # Create registration point
 registration.create_point(Node, 'config')
 
@@ -66,6 +67,7 @@ class GeneralConfig(registration.bases.NodeConfigRegistryItem):
         registry_name = _("Basic Configuration")
         lookup_proxies = ['name']
 
+
 registration.point('node.config').register_item(GeneralConfig)
 
 
@@ -87,6 +89,7 @@ class RouterIdConfig(registration.bases.NodeConfigRegistryItem):
         registry_name = _("Generic Router ID")
         multiple = True
         hidden = True
+
 
 registration.point('node.config').register_choice('core.routerid#family', registration.Choice('ipv4', _("IPv4")))
 registration.point('node.config').register_choice('core.routerid#family', registration.Choice('ipv6', _("IPv6")))
@@ -123,5 +126,6 @@ class StaticIpRouterIdConfig(RouterIdConfig):
 
         self.router_id = str(self.address.ip)
         super(StaticIpRouterIdConfig, self).save(*args, **kwargs)
+
 
 registration.point('node.config').register_item(StaticIpRouterIdConfig)

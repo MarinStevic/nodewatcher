@@ -16,6 +16,7 @@ class KoruzaNetworkMeasurementConfig(cgm_models.PackageConfig):
     class RegistryMeta(cgm_models.PackageConfig.RegistryMeta):
         registry_name = _("IRNAS KORUZA Network Measurement")
 
+
 registration.point('node.config').register_choice('irnas.koruza.netmeasure#role', registration.Choice('primary', _("Primary")))
 registration.point('node.config').register_choice('irnas.koruza.netmeasure#role', registration.Choice('secondary', _("Secondary")))
 registration.point('node.config').register_item(KoruzaNetworkMeasurementConfig)
@@ -31,6 +32,7 @@ class KoruzaVpnMonitor(registration.bases.NodeMonitoringRegistryItem):
     class RegistryMeta:
         registry_id = 'koruza.vpn'
 
+
 registration.point('node.monitoring').register_item(KoruzaVpnMonitor)
 
 
@@ -43,5 +45,6 @@ class KoruzaLinkMonitor(registration.bases.NodeMonitoringRegistryItem):
 
     class RegistryMeta:
         registry_id = 'koruza.link'
+
 
 registration.point('node.monitoring').register_item(KoruzaLinkMonitor)

@@ -24,6 +24,7 @@ class CommotionNetworkConfig(cgm_models.NetworkConfig):
     class RegistryMeta(cgm_models.NetworkConfig.RegistryMeta):
         registry_name = _("Commotion")
 
+
 registration.point('node.config').register_choice('commotion.network#network_class', registration.Choice('mesh', _("Mesh")))
 registration.point('node.config').register_choice('commotion.network#network_class', registration.Choice('client', _("Client")))
 registration.point('node.config').register_choice('commotion.network#network_class', registration.Choice('wired', _("Wired")))

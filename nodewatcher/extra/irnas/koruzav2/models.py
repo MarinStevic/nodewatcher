@@ -48,6 +48,7 @@ class KoruzaMonitor(registration.bases.NodeMonitoringRegistryItem):
     class RegistryMeta:
         registry_id = 'irnas.koruza'
 
+
 registration.point('node.monitoring').register_item(KoruzaMonitor)
 
 
@@ -119,4 +120,6 @@ class KoruzaMonitorStreams(ds_models.RegistryItemStreams):
     accel_z_range4 = AccelerometerField('z', range=4)
     accel_z_range4_maximum = AccelerometerField('z', range=4, maximum=True)
 
+
 ds_pool.register(KoruzaMonitor, KoruzaMonitorStreams)
+

@@ -50,6 +50,7 @@ class SFPMonitor(registration.bases.NodeMonitoringRegistryItem):
         registry_id = 'irnas.sfp'
         multiple = True
 
+
 registration.point('node.monitoring').register_item(SFPMonitor)
 
 
@@ -439,6 +440,7 @@ class SFPMonitorStreams(ds_models.RegistryItemStreams):
         tags = super(SFPMonitorStreams, self).get_stream_tags()
         tags.update({'serial_number': self._model.serial_number})
         return tags
+
 
 ds_pool.register(SFPMonitor, SFPMonitorStreams)
 

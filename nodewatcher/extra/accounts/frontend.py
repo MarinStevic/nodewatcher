@@ -17,6 +17,7 @@ class AccountsComponent(components.FrontendComponent):
             urls.url(r'^user/(?P<username>[\w.@+-]+)/$', views.user, name='user_page'),
         ]
 
+
 components.pool.register(AccountsComponent)
 
 
@@ -60,6 +61,7 @@ def login_url(menu_entry, context):
     if next_url and not accounts_tags.anonymous_required(next_url):
         url = "%s?%s=%s" % (url, redirect_field_name, http.urlquote(next_url))
     return url
+
 
 components.menus.get_menu('accounts_menu').add(components.MenuEntry(
     label=components.ugettext_lazy("Login"),

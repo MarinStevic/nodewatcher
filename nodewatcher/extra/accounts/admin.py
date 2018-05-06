@@ -183,6 +183,7 @@ class GroupAdmin(auth_admin.GroupAdmin):
 
         return form
 
+
 # Re-register UserAdmin and GroupAdmin.
 admin.site.unregister(auth_models.User)
 admin.site.register(auth_models.User, UserAdmin)

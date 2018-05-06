@@ -112,6 +112,7 @@ def send_activation_email(instance, site, email_change=False):
 
     instance.user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
 
+
 registration_models.RegistrationProfile.send_activation_email = send_activation_email
 
 
@@ -129,6 +130,7 @@ def activation_key_expired(instance):
     if instance.user.last_login != instance.user.date_joined:
         return False
     return orig_activation_key_expired(instance)
+
 
 activation_key_expired.boolean = True
 registration_models.RegistrationProfile.activation_key_expired = activation_key_expired

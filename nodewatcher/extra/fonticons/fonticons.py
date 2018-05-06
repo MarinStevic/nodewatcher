@@ -223,7 +223,7 @@ class FontIcons(object):
         for identifier, icon in self._icons.items():
             for name in icon["names"]:
                 fp.write(".%s-%s:before {" % (prefix, name))
-                fp.write("content: '\%s';" % hex(icon['character'])[2:])
+                fp.write("content: '\.%s';" % hex(icon['character'])[2:])
                 fp.write("}\n")
 
         fp.close()

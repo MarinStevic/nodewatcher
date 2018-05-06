@@ -202,6 +202,7 @@ def user_url(user):
     from django.core import urlresolvers
     return urlresolvers.reverse('AccountsComponent:user_page', kwargs={'username': user.username})
 
+
 ABSOLUTE_URL_OVERRIDES = {
     'auth.user': user_url,
 }
