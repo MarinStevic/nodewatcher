@@ -612,7 +612,7 @@ LEAFLET_CONFIG = {
             '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         ),
     ],
-    'DEFAULT_CENTER': (46.05, 14.507),
+    'DEFAULT_CENTER': (45.815399, 15.966568),
     'DEFAULT_ZOOM': 8,
     'MIN_ZOOM': 3,
     'MAX_ZOOM': 18,
