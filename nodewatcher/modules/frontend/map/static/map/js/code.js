@@ -21,11 +21,11 @@
         
         //APIv2 request for the recently offline nodes
         $.ajax({
-            'url': '/api/v2/node/?format=json&limit=1&&filters=monitoring:core.general__last_seen__gt="' + time_start.toISOString() + '",monitoring:core.general__last_seen__lt="' + time_stop.toISOString() + '"',
+            'url': 'https://nodes.otvorenamreza.org/api/v2/node/?format=json&limit=1&filters=monitoring:core.general__last_seen__gt="' + time_start.toISOString() + '",monitoring:core.general__last_seen__lt="' + time_stop.toISOString() + '"',
         }).done(function(data) {
             for(var i = 1; i < data.count; i++) {
                 $.ajax({
-                    'url': '/api/v2/node/?format=json&limit=1&fields=monitoring:core.general__last_seen&fields=config:core.location&fields=config:core.general&fields=config:core.type&filters=monitoring:core.general__last_seen__gt="' + time_start.toISOString() + '",monitoring:core.general__last_seen__lt="' + time_stop.toISOString() + '"&offset=' + (i - 1),
+                    'url': 'https://nodes.otvorenamreza.org/api/v2/node/?format=json&limit=1&fields=monitoring:core.general__last_seen&fields=config:core.location&fields=config:core.general&fields=config:core.type&filters=monitoring:core.general__last_seen__gt="' + time_start.toISOString() + '",monitoring:core.general__last_seen__lt="' + time_stop.toISOString() + '"&offset=' + (i - 1),
                 }).done(function(data) {
                     var node = {
                         'data': {
@@ -40,41 +40,36 @@
                 });
             }
         });
-        
-        //APIv1 request for all the currently active nodes with the location parameter set
-        $.ajax({
-            'url': "/api/v1/stream/?format=json&tags__module=topology&limit=1",
+		
+		
+		var nodes = [];
+		var edges = [];
+		var nodeIndex = {};
+		
+		$.ajax({
+            'url': 'https://nodes.otvorenamreza.org/api/v2/node/?format=json&limit=1&filters=monitoring:core.general',
         }).done(function(data) {
-            var streamId = data.objects[0].id;
-            var latestTimestamp = moment(data.objects[0].latest_datapoint).unix();
-            $.ajax({
-                'url': "/api/v1/stream/" + streamId + "/?format=json&limit=1&start=" + latestTimestamp,
-            }).done(function(data) {
-                var graph = data.datapoints[0].v;
-                var nodes = [];
-                var edges = [];
-                var nodeIndex = {};
-                
-                //storing each node data
-                $.each(graph.v, function(index, vertex) {
-                    nodes.push({
-                        'index': index,     //index of the node
-                        'data': vertex,     //data which stores the name, id, type and coordinates
-                    });
-                    nodeIndex[vertex.i] = index;
-                });
-                
-                //storing the links between the nodes
-                $.each(graph.e, function(index, edge) {
-                    edges.push({
-                        'source': nodeIndex[edge.f],
-                        'target': nodeIndex[edge.t],
-                        'data': edge,
-                    });
-                });
 
-                $.nodewatcher.map.extend(map, nodes, edges);
-            });
+            for(var i = 0; i < data.count; i++) {
+                $.ajax({
+                    'url': 'https://nodes.otvorenamreza.org/api/v2/node/?format=json&limit=1&fields=monitoring:core.general__last_seen&fields=config:core.location&fields=config:core.general&fields=config:core.type&offset=' + i,
+                }).done(function(data) {
+                    var node = {
+                        'data': {
+                            'n': data.results[0]["config"]["core.general"]["name"],                         //node name
+                            'i': data.results[0]["@id"],                                                    //node id
+                            't': data.results[0]["config"]["core.type"]["type"],                            //node type
+                            'l': (data.results[0]["config"]["core.location"]["geolocation"] ? data.results[0]["config"]["core.location"]["geolocation"]["coordinates"] : null),  //node coordinates
+                        },
+                    }
+					
+					//storing each node data
+					if (node.data.l != null) {
+						nodes.push(node);
+					}
+                });
+            }
         });
+		$.nodewatcher.map.extend(map, nodes, edges);
     });
 })(jQuery);
